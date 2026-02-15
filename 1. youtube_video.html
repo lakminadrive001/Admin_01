@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="kn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Drive Link to Profile Format</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            width: 350px;
+            text-align: center;
+        }
+        h2 { font-size: 1.2rem; margin-bottom: 15px; }
+        p { font-size: 0.9rem; color: #555; }
+        input {
+            width: 100%;
+            padding: 10px;
+            margin: 15px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+        .output-box {
+            border: 2px dashed #f0ad4e;
+            padding: 15px;
+            border-radius: 10px;
+            min-height: 40px;
+            margin-bottom: 15px;
+            color: #777;
+        }
+        button {
+            background-color: #ff6600;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 100%;
+            font-weight: bold;
+        }
+        #player {
+            margin-top: 20px;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Drive Video Link to</h2>
+    <p>Google Drive ಲಿಂಕ್ ಅನ್ನು ಇಲ್ಲಿ ಪೇಸ್ಟ್ ಮಾಡಿ:</p>
+    <input type="text" id="driveInput" placeholder="https://drive.google.com/file/d/xxxx...">
+
+    <p>ಸಿದ್ಧವಾದ ಲಿಂಕ್:</p>
+    <div class="output-box" id="outputLink">ಲಿಂಕ್ ಅನ್ನು ನಮೂದಿಸಿ...</div>
+
+    <button onclick="copyLink()">Copy Link Only</button>
+
+    <div id="player"></div>
+</div>
+
+<script>
+    // YouTube IFrame API setup
+    var tag = document.createElement('script');
+    tag.src = "https://www.youtube.com/iframe_api";
+    var firstScriptTag = document.getElementsByTagName('script')[0];
+    firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+    var player;
+    function onYouTubeIframeAPIReady() {
+        player = new YT.Player('player', {
+            height: '180',
+            width: '100%',
+            videoId: 'Xch9cpUgZVY', // Nimma video ID
+            events: {
+                'onReady': onPlayerReady
+            }
+        });
+    }
+
+    function onPlayerReady(event) {
+        // Video ready aadaga enadaru madalu illi code bariyiri
+    }
+
+    // Input change handle madalu
+    document.getElementById('driveInput').addEventListener('input', function() {
+        let val = this.value;
+        if(val.includes('drive.google.com')) {
+            document.getElementById('outputLink').innerText = val; // Nimma logic illi haki
+        }
+    });
+
+    function copyLink() {
+        let text = document.getElementById('outputLink').innerText;
+        navigator.clipboard.writeText(text);
+        alert("Link copied!");
+    }
+</script>
+
+</body>
+</html>
